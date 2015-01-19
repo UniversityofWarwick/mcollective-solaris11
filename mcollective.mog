@@ -1,0 +1,28 @@
+set name=pkg.fmri value=system/management/mcollective@$(APP_VERSION),$(PACKAGE_VERSION)
+set name=info.classification value="org.opensolaris.category.2008:System/Administration and Configuration"
+set name=info.source-url value=https://github.com/puppetlabs/marionette-collective
+set name=pkg.summary value="MCollective"
+set name=info.upstream-url value=http://puppetlabs.com/mcollective
+set name=org.opensolaris.smf.fmri value=svc:/application/mcollective value=svc:/application/mcollective:default
+set name=org.opensolaris.consolidation value=userland
+set name=pkg.description value="MCollective - Orchestration framework"
+set name=variant.arch value=$(ARCH)
+
+# pkgdepend doesn't detect it, but we require Ruby 1.8
+depend fmri=pkg:/runtime/ruby-18 type=require
+
+# Set correct owners and groups for files that aren't just root:bin
+<transform dir path=sys$ -> set group sys>
+<transform dir path=etc$ -> set group sys>
+<transform dir path=usr$ -> set group sys>
+<transform dir path=usr/share$ -> set group sys>
+<transform dir path=var$ -> set group sys>
+
+# The init.d stuff is Linux-based and won't work, so leave it out
+<transform file dir path=etc/init.d -> drop>
+
+# Set up SMF manifest file
+<transform dir path=(usr|lib)/svc/manifest -> set group sys>
+<transform file path=(usr|lib)/svc/manifest/application/*.xml -> set mode 0444>
+# Restarts manifest-import to pick up the new service manifest
+<transform file path=(usr|lib)/svc/manifest/application/*.xml -> add restart_fmri svc:/system/manifest-import:default>
