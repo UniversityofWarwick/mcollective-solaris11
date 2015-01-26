@@ -26,6 +26,6 @@ depend fmri=pkg:/runtime/ruby-18 type=require
 
 # Set up SMF manifest file
 <transform dir path=(usr|lib)/svc/manifest -> set group sys>
-<transform file path=(usr|lib)/svc/manifest/application/*.xml -> set mode 0444>
+<transform file path=(usr|lib)/svc/manifest/application/.*\.xml -> set mode 0444>
 # Restarts manifest-import to pick up the new service manifest
-<transform file path=(usr|lib)/svc/manifest/application/*.xml -> add restart_fmri svc:/system/manifest-import:default>
+<transform file path=(usr|lib)/svc/manifest/application/.*\.xml -> add restart_fmri svc:/system/manifest-import:default>
