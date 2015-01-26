@@ -1,0 +1,4 @@
+#!/bin/sh
+
+PATH=/usr/ruby/1.8/bin:$PATH /usr/sbin/mcollectived --daemonize --pidfile=/var/run/mcollective.pid
+

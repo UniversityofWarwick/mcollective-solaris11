@@ -36,6 +36,8 @@ Make files into the temporary directory, and run the various `pkg*` commands to 
 
     cp mcollective.xml $PKGDATA/lib/svc/manifest/application/mcollective.xml
 
+    cp mcollective-start $PKGDATA/usr/sbin/
+
     pkgsend generate $PKGDATA | pkgfmt > mcollective.p5m.1
 
     pkgmogrify -DAPP_VERSION=$APP_VERSION -DPACKAGE_VERSION=$PKG_VERSION -DARCH=`uname -p` mcollective.p5m.1 mcollective.mog | pkgfmt > mcollective.p5m.2

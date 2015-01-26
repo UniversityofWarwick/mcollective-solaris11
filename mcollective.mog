@@ -18,6 +18,9 @@ depend fmri=pkg:/runtime/ruby-18 type=require
 <transform dir path=usr/share$ -> set group sys>
 <transform dir path=var$ -> set group sys>
 
+<transform file path=usr/sbin/.* -> set owner root>
+<transform file path=usr/sbin/.* -> set mode 0755>
+
 # The init.d stuff is Linux-based and won't work, so leave it out
 <transform file dir path=etc/init.d -> drop>
 
